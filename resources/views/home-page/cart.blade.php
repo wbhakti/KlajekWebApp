@@ -40,32 +40,32 @@
                         <tbody>
                             @php $grandTotal = 0; @endphp
                             @foreach ($cart as $id => $item)
-                                @php $total = $item['price'] * $item['quantity']; @endphp
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ $item['image'] ?? asset('img/default-img.jpeg') }}" alt="{{ $item['name'] }}" class="img-fluid me-3" style="max-width: 60px; height: auto;">
-                                            <span>{{ $item['name'] }}</span>
-                                        </div>
-                                    </td>
-                                    <td>Rp {{ number_format($item['price'], 0, ',', '.') }}</td>
-                                    <td>
-                                        <div class="input-group">
-                                            <button class="btn btn-outline-secondary btn-sm" type="button" onclick="updateQuantity({{ $id }}, -1)">-</button>
-                                            <input type="text" class="form-control text-center" value="{{ $item['quantity'] }}" style="width: 50px;" readonly id="quantity-{{ $id }}">
-                                            <button class="btn btn-outline-secondary btn-sm" type="button" onclick="updateQuantity({{ $id }}, 1)">+</button>
-                                        </div>
-                                    </td>
-                                    <td id="total-{{ $id }}">Rp {{ number_format($total, 0, ',', '.') }}</td>
-                                    <td>
-                                        <form action="{{ route('cart.remove', $id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @php $grandTotal += $total; @endphp
+                            @php $total = $item['price'] * $item['quantity']; @endphp
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ $item['image'] ?? asset('img/default-img.jpeg') }}" alt="{{ $item['name'] }}" class="img-fluid me-3" style="max-width: 60px; height: auto;">
+                                        <span>{{ $item['name'] }}</span>
+                                    </div>
+                                </td>
+                                <td>Rp {{ number_format($item['price'], 0, ',', '.') }}</td>
+                                <td>
+                                    <div class="input-group">
+                                        <button class="btn btn-outline-secondary btn-sm" type="button" onclick="updateQuantity({{ $id }}, -1)">-</button>
+                                        <input type="text" class="form-control text-center" value="{{ $item['quantity'] }}" style="width: 50px;" readonly id="quantity-{{ $id }}">
+                                        <button class="btn btn-outline-secondary btn-sm" type="button" onclick="updateQuantity({{ $id }}, 1)">+</button>
+                                    </div>
+                                </td>
+                                <td id="total-{{ $id }}">Rp {{ number_format($total, 0, ',', '.') }}</td>
+                                <td>
+                                    <form action="{{ route('cart.remove', $id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @php $grandTotal += $total; @endphp
                             @endforeach
                         </tbody>
                         <tfoot class="table-light">
@@ -101,16 +101,16 @@
                 <div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="mapModalLabel">Pilih Lokasi</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div id="map" style="height: 400px; border: 1px solid #ddd;"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        </div>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="mapModalLabel">Pilih Lokasi</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="map" style="height: 400px; border: 1px solid #ddd;"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -135,34 +135,36 @@
             quantityInput.value = currentQuantity;
 
             fetch(`/update-cart/${itemId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ quantity: currentQuantity })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        quantity: currentQuantity
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
 
-                    const totalElement = document.getElementById(`total-${itemId}`);
-                    if (totalElement) {
-                        const total = data.itemTotal;
-                        totalElement.textContent = `Rp ${total}`;
+                        const totalElement = document.getElementById(`total-${itemId}`);
+                        if (totalElement) {
+                            const total = data.itemTotal;
+                            totalElement.textContent = `Rp ${total}`;
+                        }
+
+                        document.getElementById('grand-total').textContent = `Rp ${data.grandTotal}`;
+                    } else {
+                        alert('Gagal memperbarui jumlah item.');
                     }
-
-                    document.getElementById('grand-total').textContent = `Rp ${data.grandTotal}`;
-                } else {
-                    alert('Gagal memperbarui jumlah item.');
-                }
-            });
+                });
         }
     }
 </script>
 
 <script>
-    document.getElementById('checkout-button').addEventListener('click', function () {
+    document.getElementById('checkout-button').addEventListener('click', function() {
         var phoneInput = document.getElementById('phone');
         var addressInput = document.getElementById('address');
         var nama = document.getElementById('nama');
@@ -178,20 +180,27 @@
             nomorHp = "62" + nomorHp.substring(1);
         }
 
-        var nohpDriver = "6282183254364";
+        var nohpDriver = "6282220900097";
         var namaToko = "{{ $merchant['nama'] }}";
         var alamatToko = "{{ $merchant['deskripsi'] }}";
 
         var daftarProduk = "";
         var totalTagihan = 0;
-        @foreach ($cart as $item)
-            daftarProduk += "• {{ $item['name'] }} x{{ $item['quantity'] }} @Rp {{ number_format($item['price'], 0, ',', '.') }} = Rp {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}%0A";
-            totalTagihan += {{ $item['price'] * $item['quantity'] }};
+        @foreach($cart as $item)
+        daftarProduk += "• {{ $item['name'] }} x{{ $item['quantity'] }} @Rp {{ number_format($item['price'], 0, ',', '.') }} = Rp {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}%0A";
+        totalTagihan += {
+            {
+                $item['price'] * $item['quantity']
+            }
+        };
+
         @endforeach
         var menu = daftarProduk;
 
-        var totalTagihanFormatted = "Rp " + totalTagihan.toLocaleString('id-ID', { minimumFractionDigits: 0 });
-        var biayaAntar = "Rp 10.000"; 
+        var totalTagihanFormatted = "Rp " + totalTagihan.toLocaleString('id-ID', {
+            minimumFractionDigits: 0
+        });
+        var biayaAntar = "Rp 10.000";
         var lokasiPengantaran = "https://maps.google.com/?q=@" + longlat.value;
 
         // Format pesan WhatsApp
@@ -217,7 +226,10 @@
     let map, marker;
 
     function initMap() {
-        const initialPosition = { lat: -7.7114025, lng: 110.5974914 }; // Koordinat awal jika lokasi pengguna tidak ditemukan
+        const initialPosition = {
+            lat: -7.7114025,
+            lng: 110.5974914
+        }; // Koordinat awal jika lokasi pengguna tidak ditemukan
 
         map = new google.maps.Map(document.getElementById("map"), {
             center: initialPosition,
@@ -234,19 +246,22 @@
         // Cek apakah Geolocation API tersedia dan dapat digunakan
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                function (position) {
+                function(position) {
                     const userLat = position.coords.latitude;
                     const userLng = position.coords.longitude;
 
                     // Update peta ke lokasi pengguna
-                    const userLocation = { lat: userLat, lng: userLng };
+                    const userLocation = {
+                        lat: userLat,
+                        lng: userLng
+                    };
                     map.setCenter(userLocation);
                     marker.setPosition(userLocation);
 
                     // Update alamat saat marker dipindahkan
                     updateAddress(userLat, userLng);
                 },
-                function () {
+                function() {
                     updateAddress(initialPosition.lat, initialPosition.lng); // Gunakan lokasi default
                 }
             );
