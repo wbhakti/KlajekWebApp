@@ -45,7 +45,7 @@
         </div>
         <div class="form-group">
             <select class="form-select form-select-lg kategori-select" id="kategoriSelect">
-                <option value="" disabled selected>Semua Menu</option>
+                <option value="all" data-kategori="all" selected>SEMUA MENU</option>
                 @foreach ($kategori as $item)
                     <option value="{{ $item['id'] }}" data-kategori="{{ $item['nama'] }}" {{ request()->query('kategori') == $item['nama'] ? 'selected' : '' }}>
                         {{ $item['nama'] }}

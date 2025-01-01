@@ -72,10 +72,15 @@ class HomeController extends Controller
             $dataproduk = json_decode($responseProduk->getBody()->getContents(), true);
 
             $kategori = $request->query('kategori');
+            //dd($kategori);
             if (!empty($kategori)) {
-                $dataproduk['data'] = array_filter($dataproduk['data'], function ($item) use ($kategori) {
-                    return isset($item['kategori']['kategori']) && $item['kategori']['kategori'] === $kategori;
-                });
+                if($kategori == "all"){
+                    $dataproduk = $dataproduk;
+                }else{
+                    $dataproduk['data'] = array_filter($dataproduk['data'], function ($item) use ($kategori) {
+                        return isset($item['kategori']['kategori']) && $item['kategori']['kategori'] === $kategori;
+                    });
+                }
             }
 
         } catch (\Exception $e) {
