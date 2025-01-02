@@ -19,24 +19,20 @@
     }
 </style>
 
-<!-- Header -->
-<header class="bg-dark py-5" style="background-image: url('{{ $merchant['image_url'] }}'); background-size: cover; background-position: center;">
-    <div class="container px-4 px-lg-5 my-5">
-        <!-- Overlay Background -->
-        <div class="text-center text-white" style="position: relative;">
-            <!-- Overlay effect -->
-            <div class="overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 1;"></div>
-
-            <!-- Teks -->
-            <div style="position: relative; z-index: 2;">
-                <h1 class="display-4 fw-bolder">{{ $merchant['nama'] }}</h1>
-                <p class="lead fw-normal text-white-50 mb-0">{{ $merchant['deskripsi'] }}</p>
+<div class="d-flex flex-wrap justify-content-center" style="gap: 1rem;">
+    <div class="card" style="min-width: 150px;">
+        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Favorit</div>
+        <img class="card-img-top" src="{{ $merchant['image_url'] }}" alt="{{ $merchant['nama'] }}" />
+        <div class="card-body d-flex flex-column justify-content-between text-center">
+            <div>
+                <h4 class="fw-bolder mb-1">{{ $merchant['nama'] }}</h4>
+                <small class="text-muted d-block mb-2">{{ $merchant['deskripsi'] }}</small>
             </div>
         </div>
     </div>
-</header>
+</div>
 
-<section class="py-5">
+<section class="py-4">
     <div class="container px-4 px-lg-5 mt-0">
 
         <!-- Pilihan Kategori -->

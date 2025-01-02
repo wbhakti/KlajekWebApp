@@ -2,24 +2,127 @@
 
 @section('content')
 
-<!-- Header -->
-<header class="bg-dark py-5" style="background-image: url('{{ $merchant['image_url'] }}'); background-size: cover; background-position: center;">
-    <div class="container px-4 px-lg-5 my-5">
-        <!-- Overlay Background -->
-        <div class="text-center text-white" style="position: relative;">
-            <!-- Overlay effect -->
-            <div class="overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 1;"></div>
+<style>
+    /* Pastikan tabel responsif */
+    .table-responsive {
+        overflow-x: auto; /* Izinkan scroll horizontal jika diperlukan */
+    }
 
-            <!-- Teks -->
-            <div style="position: relative; z-index: 2;">
-                <h1 class="display-4 fw-bolder">{{ $merchant['nama'] }}</h1>
-                <p class="lead fw-normal text-white-50 mb-0">{{ $merchant['deskripsi'] }}</p>
+    .table {
+        width: 100%; /* Pastikan tabel mengambil seluruh lebar kontainer */
+        table-layout: auto; /* Biarkan kolom menyesuaikan ukuran konten */
+    }
+
+    .table-image {
+        max-width: 60px;
+        height: auto;
+    }
+
+    .font-heading {
+        font-size: 16px;
+    }
+
+    .font-isi-nama {
+        font-size: 14px;
+    }
+
+    .font-isi-harga {
+        font-size: 14px;
+    }
+
+    .font-isi-jumlah {
+        font-size: 14px;
+    }
+
+    .font-isi-total {
+        font-size: 14px;
+    }
+    .font-isi-grandtotal {
+        font-size: 16px;
+    }
+    /* Ukuran tombol default */
+    .btn-small {
+        font-size: 14px; /* Ukuran font lebih kecil */
+        padding: 4px 8px; /* Kurangi padding */
+    }
+
+/* Gaya responsif untuk layar kecil */
+    @media (max-width: 768px) {
+
+    .table-responsive {
+    overflow-x: hidden; /* Izinkan scroll horizontal jika diperlukan */
+    }
+
+    .table {
+        width: 100%; /* Pastikan tabel mengambil seluruh lebar kontainer */
+        table-layout: fixed; /* Biarkan kolom menyesuaikan ukuran konten */
+    }
+
+    .table th, .table td {
+        padding: 2px; /* Kurangi padding */
+    }
+
+    .table-image {
+        display: none; /* Hilangkan gambar */
+    }
+
+    
+
+    .input-group .btn {
+        font-size: 8px; /* Sesuaikan ukuran tombol */
+    }
+
+    .input-group input {
+        width: 40px; /* Sesuaikan lebar input */
+        font-size: 8px; /* Sesuaikan ukuran teks input */
+    }
+
+    .font-heading {
+        font-size: 9px;
+    }
+
+    .font-isi-nama {
+        word-break: break-word;
+        font-size: 10px;
+    }
+
+    .font-isi-harga {
+        font-size: 10px;
+    }
+
+    .font-isi-jumlah {
+        font-size: 10px;
+    }
+
+    .font-isi-total {
+        font-size: 10px;
+    }
+    .font-isi-grandtotal {
+        font-size: 11px;
+    }
+    .btn-small {
+        font-size: 10px; /* Ukuran font lebih kecil */
+        padding: 2px 6px; /* Kurangi padding */
+    }
+}
+
+</style>
+
+<!-- Header -->
+<div class="d-flex flex-wrap justify-content-center" style="gap: 1rem;">
+    <div class="card" style="min-width: 150px;">
+        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Favorit</div>
+        <img class="card-img-top" src="{{ $merchant['image_url'] }}" alt="{{ $merchant['nama'] }}" />
+        <div class="card-body d-flex flex-column justify-content-between text-center">
+            <div>
+                <h4 class="fw-bolder mb-1">{{ $merchant['nama'] }}</h4>
+                <small class="text-muted d-block mb-2">{{ $merchant['deskripsi'] }}</small>
             </div>
         </div>
     </div>
-</header>
+</div>
 
-<section class="py-5">
+<section class="py-4">
 
     <div class="container px-4 px-lg-5 mt-0">
         <h3 class="text-center mb-4">Keranjang Belanja</h3>
@@ -30,10 +133,10 @@
                     <table class="table table-hover align-middle">
                         <thead class="table-primary">
                             <tr>
-                                <th>Nama Produk</th>
-                                <th>Harga</th>
-                                <th>Jumlah</th>
-                                <th>Total</th>
+                                <th class="font-heading">Nama Produk</th>
+                                <th class="font-heading">Harga</th>
+                                <th class="font-heading">Jumlah</th>
+                                <th class="font-heading">Total</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -42,26 +145,26 @@
                             @foreach ($cart as $id => $item)
                             @php $total = $item['price'] * $item['quantity']; @endphp
                             <tr>
-                                <td>
+                                <td class="font-isi-nama">
                                     <div class="d-flex align-items-center">
-                                        <img src="{{ $item['image'] ?? asset('img/default-img.jpeg') }}" alt="{{ $item['name'] }}" class="img-fluid me-3" style="max-width: 60px; height: auto;">
+                                        <img src="{{ $item['image'] ?? asset('img/default-img.jpeg') }}" alt="{{ $item['name'] }}" class="img-fluid me-3 table-image">
                                         <span>{{ $item['name'] }}</span>
                                     </div>
                                 </td>
-                                <td>Rp {{ number_format($item['price'], 0, ',', '.') }}</td>
-                                <td>
+                                <td class="font-isi-harga">Rp {{ number_format($item['price'], 0, ',', '.') }}</td>
+                                <td class="font-isi-jumlah">
                                     <div class="input-group">
                                         <button class="btn btn-outline-secondary btn-sm" type="button" onclick="updateQuantity({{ $id }}, -1)">-</button>
-                                        <input type="text" class="form-control text-center" value="{{ $item['quantity'] }}" style="width: 50px;" readonly id="quantity-{{ $id }}">
+                                        <input type="text" class="form-control text-center jml-input" value="{{ $item['quantity'] }}" readonly id="quantity-{{ $id }}">
                                         <button class="btn btn-outline-secondary btn-sm" type="button" onclick="updateQuantity({{ $id }}, 1)">+</button>
                                     </div>
                                 </td>
-                                <td id="total-{{ $id }}">Rp {{ number_format($total, 0, ',', '.') }}</td>
+                                <td class="font-isi-total" id="total-{{ $id }}">Rp {{ number_format($total, 0, ',', '.') }}</td>
                                 <td>
                                     <form action="{{ route('cart.remove', $id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                        <button type="submit" class="btn btn-danger btn-sm btn-small">Hapus</button>
                                     </form>
                                 </td>
                             </tr>
@@ -70,8 +173,8 @@
                         </tbody>
                         <tfoot class="table-light">
                             <tr>
-                                <th colspan="4" class="text-end">Total Keseluruhan</th>
-                                <th id="grand-total">Rp {{ number_format($grandTotal, 0, ',', '.') }}</th>
+                                <th colspan="4" class="text-end font-isi-grandtotal">Total Keseluruhan</th>
+                                <th id="grand-total" class="font-isi-grandtotal">Rp {{ number_format($grandTotal, 0, ',', '.') }}</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -164,7 +267,7 @@
 </script>
 
 <script>
-    document.getElementById('checkout-button').addEventListener('click', function() {
+    document.getElementById('checkout-button').addEventListener('click', async function() {
         var phoneInput = document.getElementById('phone');
         var addressInput = document.getElementById('address');
         var nama = document.getElementById('nama');
@@ -183,24 +286,42 @@
         var nohpDriver = "6282220900097";
         var namaToko = "{{ $merchant['nama'] }}";
         var alamatToko = "{{ $merchant['deskripsi'] }}";
+        var idMerchant = "{{ $merchant['id'] }}";
 
         var daftarProduk = "";
         var totalTagihan = 0;
-        @foreach($cart as $item)
-        daftarProduk += "• {{ $item['name'] }} x{{ $item['quantity'] }} @Rp {{ number_format($item['price'], 0, ',', '.') }} = Rp {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}%0A";
-        totalTagihan += {
-            {
-                $item['price'] * $item['quantity']
-            }
-        };
-
+        @foreach ($cart as $item)
+            daftarProduk += "• {{ $item['name'] }} x{{ $item['quantity'] }} @Rp {{ number_format($item['price'], 0, ',', '.') }} = Rp {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}%0A";
+            totalTagihan += {{ $item['price'] * $item['quantity'] }};
         @endforeach
         var menu = daftarProduk;
 
-        var totalTagihanFormatted = "Rp " + totalTagihan.toLocaleString('id-ID', {
-            minimumFractionDigits: 0
-        });
-        var biayaAntar = "Rp 10.000";
+        var totalTagihanFormatted = "Rp " + totalTagihan.toLocaleString('id-ID', { minimumFractionDigits: 0 });
+
+        //hitung ongkir
+        let biayaAntar = 20000;
+        let fee = 2000;
+        try {
+            const [latitude, longitude] = longlat.value.split(',');
+            const merchantId = idMerchant;
+
+            const response = await fetch(`https://api.klajek.com/api/ongkir?merchant_id=${merchantId}&latitude=${latitude}&longitude=${longitude}`);
+            if (response.ok) {
+                const data = await response.json();
+                biayaAntar = data.data["biaya_antar"];
+                fee = data.data["fee"];
+            } else {
+                console.log("Gagal menghitung ongkir, menggunakan default ongkir.");
+            }
+        } catch (error) {
+            console.log("Error menghitung ongkir:", error);
+        }
+
+        const totalBayar = totalTagihan + biayaAntar + fee;
+        const biayaAntarFormatted = `Rp ${biayaAntar.toLocaleString('id-ID')}`;
+        const feeFormatted = `Rp ${fee.toLocaleString('id-ID')}`;
+        const totalBayarFormatted = `Rp ${totalBayar.toLocaleString('id-ID')}`;
+
         var lokasiPengantaran = "https://maps.google.com/?q=@" + longlat.value;
 
         // Format pesan WhatsApp
@@ -208,7 +329,9 @@
             "DAFTAR PEMESANAN%0A" + namaToko + "%0A" + alamatToko + "%0A%0A" + menu + "%0A" +
             "------------------------------%0A" +
             "Total Tagihan " + totalTagihanFormatted + "%0A" +
-            "Biaya Antar " + biayaAntar + "%0A" +
+            "Biaya Antar " + biayaAntarFormatted + "%0A" +
+            "Biaya Fee " + feeFormatted + "%0A" +
+            "Total Bayar " + totalBayarFormatted + "%0A" +
             "Pembayaran Transfer%0A%0A" +
             "Data Pemesan%0A" +
             "Nama : " + nama.value + "%0A" +
@@ -226,10 +349,7 @@
     let map, marker;
 
     function initMap() {
-        const initialPosition = {
-            lat: -7.7114025,
-            lng: 110.5974914
-        }; // Koordinat awal jika lokasi pengguna tidak ditemukan
+        const initialPosition = { lat: -7.7114025, lng: 110.5974914 };
 
         map = new google.maps.Map(document.getElementById("map"), {
             center: initialPosition,
@@ -240,48 +360,51 @@
         marker = new google.maps.Marker({
             position: initialPosition,
             map: map,
-            draggable: false, // Marker tidak bisa dipindahkan
+            draggable: true,
         });
 
-        // Cek apakah Geolocation API tersedia dan dapat digunakan
+        marker.addListener("dragend", function () {
+            const newPosition = marker.getPosition();
+            const newLat = newPosition.lat();
+            const newLng = newPosition.lng();
+
+            updateAddress(newLat, newLng);
+        });
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                function(position) {
+                function (position) {
                     const userLat = position.coords.latitude;
                     const userLng = position.coords.longitude;
 
-                    // Update peta ke lokasi pengguna
-                    const userLocation = {
-                        lat: userLat,
-                        lng: userLng
-                    };
+                    const userLocation = { lat: userLat, lng: userLng };
                     map.setCenter(userLocation);
                     marker.setPosition(userLocation);
 
-                    // Update alamat saat marker dipindahkan
                     updateAddress(userLat, userLng);
                 },
-                function() {
-                    updateAddress(initialPosition.lat, initialPosition.lng); // Gunakan lokasi default
+                function () {
+                    updateAddress(initialPosition.lat, initialPosition.lng);
                 }
             );
         } else {
-            updateAddress(initialPosition.lat, initialPosition.lng); // Gunakan lokasi default
+            updateAddress(initialPosition.lat, initialPosition.lng);
         }
     }
 
-    // Fungsi untuk mengambil alamat dari Google Maps API
     async function updateAddress(lat, lng) {
         const addressField = document.getElementById("address");
         const longlat = document.getElementById("longlat");
-        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+        const apiKey = "AIzaSyB1kT5Kf-JiXJtg4taoWOZ5WuvqPertrjg";
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`);
         const data = await response.json();
-        if (data && data.display_name) {
-            addressField.value = `${data.display_name}`;
+        console.log(lat + " " + lng);
+        if (data.status === "OK" && data.results[0]) {
+            addressField.value = data.results[0].formatted_address;
             longlat.value = `${lat},${lng}`;
         } else {
-            addressField.value = 'Isi alamat pengiriman';
-            longlat.value = '-7.7114025,110.5974914';
+            addressField.value = 'Alamat tidak ditemukan';
+            longlat.value = '-7.7114025,110.5974914'; // Lokasi default
         }
     }
 </script>

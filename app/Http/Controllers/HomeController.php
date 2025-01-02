@@ -59,7 +59,7 @@ class HomeController extends Controller
 
         try {
             // Hit API Kategori
-            $responseKategori = $client->request('GET', 'https://api.klajek.com/api/category');
+            $responseKategori = $client->request('GET', 'https://api.klajek.com/api/category/' . $id);
             $dataKategori = json_decode($responseKategori->getBody()->getContents(), true);
         } catch (\Exception $e) {
             Log::error('Gagal memuat data kategori: ' . $e->getMessage());
@@ -81,6 +81,8 @@ class HomeController extends Controller
                         return isset($item['kategori']['kategori']) && $item['kategori']['kategori'] === $kategori;
                     });
                 }
+            }else{
+                $dataproduk = $dataproduk;
             }
 
         } catch (\Exception $e) {
