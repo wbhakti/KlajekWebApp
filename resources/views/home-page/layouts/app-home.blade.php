@@ -20,15 +20,15 @@
                 padding-top: 56px; /* Sesuaikan nilai ini dengan tinggi navbar */
             }
             .custom-navbar {
-                background-color: #842029; /* Warna hijau */
+                background-color: #FFF212; 
                 color: white;
             }
             .custom-navbar .btn-outline-dark {
-                color: white;
-                border-color: white;
+                color: #033800;
+                border-color: #033800;
             }
             .custom-navbar .btn-outline-dark:hover {
-                background-color: white;
+                background-color: #033800;
                 color: #842029;
             }
         </style>
@@ -37,7 +37,7 @@
         <!-- Navigation-->
         <nav class="navbar custom-navbar fixed-top">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="{{ url('/') }}" style="color: #fff;"><b>Home</b></a>
+                <a class="navbar-brand" href="{{ url('/') }}" style="color: #033800;"><b>Home</b></a>
                 <form class="d-flex" action="/cart" method="GET">
                     <button class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>
@@ -52,8 +52,8 @@
         @yield('content')
         
         <!-- Footer-->
-        <footer class="py-5 bg-dark" style="background-color: #842029 !important;">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Food Order 2024</p></div>
+        <footer class="py-5 bg-dark" style="background-color: #FFF212 !important;">
+            <div class="container"><p class="m-0 text-center">Copyright &copy; Klajek 2024</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="{{ asset('frontend-vendor/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js') }}"></script>

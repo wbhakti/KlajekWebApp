@@ -7,8 +7,8 @@
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Shop in style</h1>
-            <p class="lead fw-normal text-white-50 mb-0">With this shop homepage template</p>
+            <h1 class="display-4 fw-bolder">KLAJEK</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Kami adalah aplikasi pengiriman makanan terbaik yang siap membantu Anda menikmati hidangan favorit Anda dengan mudah dan cepat.</p>
         </div>
     </div>
 </header>
@@ -23,7 +23,7 @@
         <div class="d-flex flex-wrap justify-content-center" style="gap: 1rem;">
             @foreach ($restoran['data'] as $item)
                 <div class="card" style="min-width: 150px;">
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Baru</div>
                     <img class="card-img-top" src="{{ $item['image_url'] }}" alt="{{ $item['nama'] }}" />
                     <div class="card-body d-flex flex-column justify-content-between text-center">
                         <div>
