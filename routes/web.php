@@ -25,3 +25,6 @@ Route::delete('/cart/{id}', 'App\Http\Controllers\CartController@remove')->name(
 Route::post('/update-cart/{id}', 'App\Http\Controllers\CartController@update')->name('cart.update');
 Route::get('/checkout', 'App\Http\Controllers\CartController@checkout')->name('checkout');
 
+Route::get('/petunjuk', 'App\Http\Controllers\HomeController@petunjuk')->name('petunjuk');
+Route::get('/contact', 'App\Http\Controllers\HomeController@contact')->name('contact');
+

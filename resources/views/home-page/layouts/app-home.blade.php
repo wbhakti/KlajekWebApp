@@ -15,36 +15,56 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
         <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
+
         <style>
             body {
                 padding-top: 56px; /* Sesuaikan nilai ini dengan tinggi navbar */
             }
-            .custom-navbar {
+            .navbar-expand {
                 background-color: #FFF212; 
                 color: white;
             }
-            .custom-navbar .btn-outline-dark {
+            .navbar-expand .btn-outline-dark {
                 color: #033800;
                 border-color: #033800;
             }
-            .custom-navbar .btn-outline-dark:hover {
+            .navbar-expand .btn-outline-dark:hover {
                 background-color: #033800;
                 color: #842029;
             }
         </style>
     </head>
-    <body>
+    <body class="sb-nav-fixed">
         <!-- Navigation-->
-        <nav class="navbar custom-navbar fixed-top">
+        <!-- <nav class="navbar custom-navbar fixed-top"> -->
+        <nav class="sb-topnav navbar navbar-expand fixed-top">
             <div class="container px-4 px-lg-5">
+                
+                <!-- Sidebar Toggle-->
+                @if(Request::is('/'))
+                <ul class="navbar-nav ms-md-0">
+                    <li class="nav-item dropdown">
+                        <a class="navbar-brand dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-bars"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url('/petunjuk') }}">Petunjuk Penggunaan</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="{{ url('/contact') }}">Hubungi Kami</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="#">Pendaftaran Mitra</a></li>
+                        </ul>
+                    </li>
+                </ul> 
+                @else
                 <a class="navbar-brand" href="{{ url('/') }}" style="color: #033800;"><b>Home</b></a>
+                @endif
+                    
                 <form class="d-flex" action="/cart" method="GET">
                     <button class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
                         <span id="cart-badge" class="badge bg-dark text-white ms-1 rounded-pill">{{ $cartCount }}</span>
                     </button>
-                </form>                    
+                </form>               
             </div>
         </nav>
         
