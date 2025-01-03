@@ -317,31 +317,85 @@
             console.log("Error menghitung ongkir:", error);
         }
 
-        const totalBayar = totalTagihan + biayaAntar + fee;
-        const biayaAntarFormatted = `Rp ${biayaAntar.toLocaleString('id-ID')}`;
-        const feeFormatted = `Rp ${fee.toLocaleString('id-ID')}`;
-        const totalBayarFormatted = `Rp ${totalBayar.toLocaleString('id-ID')}`;
+        //hit ke api order
+        try {
 
-        var lokasiPengantaran = "https://maps.google.com/?q=@" + longlat.value;
+            var daftarProduk = [];
+            var totalTagihan = 0;
+            @foreach ($cart as $item)
+                daftarProduk.push({
+                    menu_id: "{{ $item['idMenu'] }}",
+                    note: "catatan"
+                });
+                totalTagihan += {{ $item['price'] * $item['quantity'] }};
+            @endforeach
 
-        // Format pesan WhatsApp
-        var waLink = "https://wa.me/" + nohpDriver + "?text=" +
-            "DAFTAR PEMESANAN%0A" + namaToko + "%0A" + alamatToko + "%0A%0A" + menu + "%0A" +
-            "------------------------------%0A" +
-            "Total Tagihan " + totalTagihanFormatted + "%0A" +
-            "Biaya Antar " + biayaAntarFormatted + "%0A" +
-            "Biaya Fee " + feeFormatted + "%0A" +
-            "Total Bayar " + totalBayarFormatted + "%0A" +
-            "Pembayaran Transfer%0A%0A" +
-            "Data Pemesan%0A" +
-            "Nama : " + nama.value + "%0A" +
-            "Nomor Handphone : " + nomorHp + "%0A" +
-            "Alamat : " + addressInput.value + "%0A%0A" +
-            "------------------------------%0A" +
-            "Lokasi Pengantaran%0A" + lokasiPengantaran;
+            //request
+            const orderData = {
+                full_name: nama.value.trim(),
+                phone_number: nomorHp,
+                address: addressInput.value.trim(),
+                merchant_id: idMerchant,
+                total: totalTagihan,
+                ongkir: biayaAntar,
+                fee: fee,
+                detail: daftarProduk
+            };
 
-        window.open(waLink, '_blank');
-        window.location.href = '/checkout';
+            try{
+
+                const response = await fetch('https://api.klajek.com/api/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                    body: JSON.stringify(orderData)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log("sukses membuat order");
+                }
+                else {
+                    const errorData = await response.json();
+                    console.log("Gagal membuat order:", errorData);
+                    alert("Terjadi kesalahan saat memproses pesanan.");
+                }
+                
+            }catch(error){
+                
+            }
+
+                        const totalBayar = totalTagihan + biayaAntar + fee;
+                        const biayaAntarFormatted = `Rp ${biayaAntar.toLocaleString('id-ID')}`;
+                        const feeFormatted = `Rp ${fee.toLocaleString('id-ID')}`;
+                        const totalBayarFormatted = `Rp ${totalBayar.toLocaleString('id-ID')}`;
+
+                        var lokasiPengantaran = "https://maps.google.com/?q=@" + longlat.value;
+
+                        // Format pesan WhatsApp
+                        var waLink = "https://wa.me/" + nohpDriver + "?text=" +
+                            "DAFTAR PEMESANAN%0A" + namaToko + "%0A" + alamatToko + "%0A%0A" + menu + "%0A" +
+                            "------------------------------%0A" +
+                            "Total Tagihan " + totalTagihanFormatted + "%0A" +
+                            "Biaya Antar " + biayaAntarFormatted + "%0A" +
+                            "Biaya Fee " + feeFormatted + "%0A" +
+                            "Total Bayar " + totalBayarFormatted + "%0A" +
+                            "Pembayaran Transfer%0A%0A" +
+                            "Data Pemesan%0A" +
+                            "Nama : " + nama.value + "%0A" +
+                            "Nomor Handphone : " + nomorHp + "%0A" +
+                            "Alamat : " + addressInput.value + "%0A%0A" +
+                            "------------------------------%0A" +
+                            "Lokasi Pengantaran%0A" + lokasiPengantaran;
+
+                        window.open(waLink, '_blank');
+                        window.location.href = '/checkout';
+            
+        } catch (error) {
+            console.log("Error gagal hit api order", error);
+            alert("Gagal terhubung ke server.");
+        }
     });
 </script>
 

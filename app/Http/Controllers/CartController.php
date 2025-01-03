@@ -40,6 +40,7 @@ class CartController extends Controller
                 'quantity' => $quantity,
                 'merchantId' => $merchantId,
                 'image' => $img,
+                'idMenu' => $productId,
             ];
         }
 
