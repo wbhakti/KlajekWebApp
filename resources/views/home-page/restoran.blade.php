@@ -5,16 +5,16 @@
 
 <style>
     .kategori-select {
-        border: 2px solid #007bff;
+        border: 2px solid #033800;
         border-radius: 5px;
         padding: 10px;
         font-size: 1.2rem;
-        color: #007bff;
+        color: #033800;
         background-color: #f8f9fa;
     }
 
     .kategori-select:focus {
-        border-color: #0056b3;
+        border-color: #033800;
         box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     }
 </style>
@@ -61,7 +61,7 @@
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Sale badge-->
-                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                        <!-- <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Baru</div> -->
                         <!-- Product image-->
                         <img class="card-img-top" src="{{ $item['image_url'] }}" alt="..." onerror="this.onerror=null;this.src='{{ asset('img/default-img.jpeg') }}';" style="width: 100%; height: 150px; object-fit: cover;"/>
                         <!-- Product details-->

@@ -193,7 +193,7 @@
 
                 <div class="mb-4">
                     <label for="address" class="form-label fw-bold">Alamat Pengiriman</label>
-                    <button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#mapModal">
+                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#mapModal">
                         Lokasi saya
                     </button>
                     <input type="text" name="longlat" id="longlat" value="" hidden>
