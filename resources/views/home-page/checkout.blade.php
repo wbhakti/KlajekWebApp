@@ -19,7 +19,9 @@
     <div class="container text-center">
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">Pembelian Anda Telah Sukses!</h4>
-            <p>Terima kasih atas kepercayaan Anda. Pembelian Anda telah berhasil diproses. Anda akan menerima konfirmasi lebih lanjut melalui email.</p>
+            <p>Terima kasih atas kepercayaan Anda. Pembelian Anda telah berhasil diproses. Anda akan menerima konfirmasi lebih lanjut melalui whatsapp.</p>
+            <hr>
+            <p>Silahkan selesaikan pembayaran Anda</p>
             <hr>
             <p class="mb-0">Jika Anda memiliki pertanyaan lebih lanjut, silakan hubungi kami.</p>
         </div>

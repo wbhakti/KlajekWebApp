@@ -27,4 +27,5 @@ Route::get('/checkout', 'App\Http\Controllers\CartController@checkout')->name('c
 
 Route::get('/petunjuk', 'App\Http\Controllers\HomeController@petunjuk')->name('petunjuk');
 Route::get('/contact', 'App\Http\Controllers\HomeController@contact')->name('contact');
+Route::get('/mitra', 'App\Http\Controllers\HomeController@mitra')->name('mitra');
 

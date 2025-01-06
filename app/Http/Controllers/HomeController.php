@@ -51,4 +51,14 @@ class HomeController extends Controller
         ]);
     }
 
+    public function mitra()
+    {
+        $cart = session()->get('cart', []);
+        $cartCount = count($cart);
+
+        return view('home-page/registrasi_mitra', [
+            'cartCount' => $cartCount
+        ]);
+    }
+
 }

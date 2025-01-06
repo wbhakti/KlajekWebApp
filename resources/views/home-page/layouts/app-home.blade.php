@@ -50,7 +50,7 @@
                             <li><hr class="dropdown-divider" /></li>
                             <li><a class="dropdown-item" href="{{ url('/contact') }}">Hubungi Kami</a></li>
                             <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="#">Pendaftaran Mitra</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/mitra') }}">Pendaftaran Mitra</a></li>
                         </ul>
                     </li>
                 </ul> 
@@ -58,13 +58,18 @@
                 <a class="navbar-brand" href="{{ url('/') }}" style="color: #033800;"><b>Home</b></a>
                 @endif
                     
+                @if(Request::is('contact') || Request::is('petunjuk') || Request::is('mitra'))
+                    
+                @else
                 <form class="d-flex" action="/cart" method="GET">
                     <button class="btn btn-outline-dark" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
                         <span id="cart-badge" class="badge bg-dark text-white ms-1 rounded-pill">{{ $cartCount }}</span>
                     </button>
-                </form>               
+                </form>  
+                @endif
+                             
             </div>
         </nav>
         
