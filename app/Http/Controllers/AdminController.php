@@ -13,6 +13,21 @@ class AdminController extends Controller
         return view('sb-admin-2/dashboard');
     }
 
+    public function MasterMerchant()
+    {
+        return view('sb-admin-2/mastermerchant');
+    }
+
+    public function MasterMenu()
+    {
+        return view('sb-admin-2/mastermenu');
+    }
+
+    public function MasterKategori()
+    {
+        return view('sb-admin-2/masterkategori');
+    }
+
     public function logout(Request $request)
     {
         // Menghapus semua data dari sesi

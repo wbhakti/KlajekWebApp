@@ -339,10 +339,8 @@
                 total: totalTagihan,
                 ongkir: biayaAntar,
                 fee: fee,
-                detail: daftarProduk
+                details: daftarProduk
             };
-
-            try{
 
                 const response = await fetch('https://api.klajek.com/api/checkout', {
                 method: 'POST',
@@ -354,19 +352,8 @@
 
                 if (response.ok) {
                     const result = await response.json();
-                    console.log("sukses membuat order");
-                }
-                else {
-                    const errorData = await response.json();
-                    console.log("Gagal membuat order:", errorData);
-                    alert("Terjadi kesalahan saat memproses pesanan.");
-                }
-                
-            }catch(error){
-                
-            }
 
-                        const totalBayar = totalTagihan + biayaAntar + fee;
+                    const totalBayar = totalTagihan + biayaAntar + fee;
                         const biayaAntarFormatted = `Rp ${biayaAntar.toLocaleString('id-ID')}`;
                         const feeFormatted = `Rp ${fee.toLocaleString('id-ID')}`;
                         const totalBayarFormatted = `Rp ${totalBayar.toLocaleString('id-ID')}`;
@@ -391,6 +378,12 @@
 
                         window.open(waLink, '_blank');
                         window.location.href = '/checkout';
+                }
+                else {
+                    const errorData = await response.json();
+                    console.log("Gagal membuat order:", errorData);
+                    alert("Terjadi kesalahan saat memproses pesanan.");
+                }
             
         } catch (error) {
             console.log("Error gagal hit api order", error);
